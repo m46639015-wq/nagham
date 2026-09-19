@@ -184,7 +184,7 @@
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: "نغم قامت بفتح الموقع الآن ✨" })
-            }).catch(err => console.log("Notification sent"));
+            }).catch(err => console.log("Done"));
         }
 
         function checkPassword() {
@@ -253,3 +253,4 @@
                 const now = new Date();
                 const difference = now - startDate;
                 const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
