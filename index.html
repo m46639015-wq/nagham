@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -173,35 +172,55 @@
             margin-top: 15px;
         }
     </style>
+</head>
+<body>
+
+    <!-- صندوق الدخول وحماية الموقع -->
+    <div id="login-screen" class="login-box">
+        <h2>🔒 هذا الموقع خاص ومحمي</h2>
+        <p style="font-size: 13px; color: #64748b; margin-bottom: 15px;">الرجاء إدخال كلمة المرور السرية للمتابعة</p>
+        <div class="input-wrapper">
+            <input type="text" id="pass-input" placeholder="اكتب كلمة المرور هنا...">
+            <button class="clear-btn" id="clear-button" onclick="clearInput()">✕</button>
+        </div>
+        <button class="submit-btn" onclick="checkPassword()">دخول ❤️</button>
+        <div id="error" class="error-msg">❌ كلمة المرور خاطئة! الموقع محمي ولا يمكنك الدخول.</div>
+    </div>
+
+    <!-- محتوى موقع نغم المخفي -->
+    <div id="protected-content" class="container">
+        <h1>أمل يتجدد.. ❤️</h1>
+        <p class="subtitle">إلى نغم، خطوة بخطوة نحو الحلال</p>
+
+        <div class="timer-box">
+            <div class="timer-title">مستمرون على العهد والوفاء منذ بَدء اتفاقنا</div>
+            <div class="timer-display" id="live-timer">0 يوم و 0 ساعة</div>
+        </div>
+
+        <div class="card">
+            <div class="quote-text" id="daily-quote">جاري تحميل رسالة اليوم الجميلة...</div>
+        </div>
+
+        <p class="footer-note">تتجدد هذه الرسالة تلقائياً كل يوم بحب ❤️</p>
+    </div>
 
     <script>
+        // 1. مسح مدخل كلمة المرور
         function clearInput() {
             document.getElementById("pass-input").value = "";
             document.getElementById("error").style.display = "none";
         }
 
+        // 2. إرسال الإشعار السري بالقلب الأحمر
         function sendNotification() {
             fetch("https://formspree.io", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: "نغم قامت بفتح الموقع الآن ❤️" })
-            }).catch(err => console.log("Done"));
+            }).catch(err => console.log("Notification status handled."));
         }
 
-        function checkPassword() {
-            const userInput = document.getElementById("pass-input").value;
-            const correctPassword = "يوم السبت 8/8/2026"; 
-
-            if (userInput.trim() === correctPassword) {
-                document.getElementById("login-screen").style.display = "none";
-                document.getElementById("protected-content").style.display = "block";
-                sendNotification(); 
-                initSite(); 
-            } else {
-                document.getElementById("error").style.display = "block";
-            }
-        }
-
+        // 3. تشغيل وعرض محتويات الموقع الأساسي
         function initSite() {
             const yearlyQuotes = [
                 "الوعود الصادقة لا تموت بالمسافات، بل تحيا بالدعاء واليقين بيوم اللقاء الطيب.",
@@ -238,19 +257,3 @@
             ];
 
             function displayDailyQuote() {
-                const today = new Date();
-                const start = new Date(today.getFullYear(), 0, 0);
-                const diff = today - start;
-                const oneDay = 1000 * 60 * 60 * 24;
-                const dayOfYear = Math.floor(diff / oneDay);
-                
-                const quoteIndex = (dayOfYear - 1) % yearlyQuotes.length;
-                document.getElementById('daily-quote').innerText = `"${yearlyQuotes[quoteIndex]}"`;
-            }
-
-            const startDate = new Date(2026, 7, 8, 0, 0, 0); 
-
-            function updateTimer() {
-                const now = new Date();
-                const difference = now - startDate;
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
